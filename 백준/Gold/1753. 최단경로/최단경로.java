@@ -89,9 +89,8 @@ public class Main {
 			visited[nowV] = true;
 
 			for (Node next : graph[nowV]) {
-				int k = dp[nowV] + next.cost;
-				if (dp[next.index] == 0 || dp[next.index] > k) {
-					dp[next.index] = k;
+				if (dp[next.index] == 0 || dp[next.index] > dp[nowV] + next.cost) {
+					dp[next.index] = dp[nowV] + next.cost;;
 					pq.offer(new Node(next.index, dp[next.index]));
 				}
 			}
