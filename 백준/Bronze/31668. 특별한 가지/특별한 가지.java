@@ -1,1 +1,1 @@
-import java.util.*;class Main{public static void main(String[] a){Scanner s=new Scanner(System.in);System.out.print((int) (1/s.nextDouble()*s.nextInt()*s.nextInt()));}}
+import java.util.*;class Main{public static void main(String[] a){Scanner s=new Scanner(System.in);System.out.print((int)(1/s.nextDouble()*s.nextInt()*s.nextInt()));}}
