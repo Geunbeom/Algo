@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main{
@@ -13,7 +14,7 @@ public class Main{
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
 		ArrayList<Integer>[] graph = new ArrayList[N+1];
-		boolean[] visited = new boolean[N+1];
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
 		int[] degree = new int[N+1];
 		
 		for (int i=1; i<=N; i++) {
@@ -29,21 +30,16 @@ public class Main{
 			degree[b]++;
 		}
 		
+		for (int i=1; i<=N; i++) {
+			if(degree[i] == 0) pq.offer(i);
+		}
 		
-		int curr = 0;
-		for (int j=1; j<=N; j++) {
-			
-			for (int i=1; i<=N; i++) {
-				if(!visited[i] && degree[i] == 0) {
-					visited[i] = true;
-					curr = i;
-					sb.append(curr +" ");
-					break;
-				}
-			}
-			
+		while (!pq.isEmpty()) {
+			int curr = pq.poll();
+			sb.append(curr+" ");
 			for (int next : graph[curr]) {
 				degree[next]--;
+				if(degree[next] == 0) pq.offer(next);
 			}
 		}
 		
