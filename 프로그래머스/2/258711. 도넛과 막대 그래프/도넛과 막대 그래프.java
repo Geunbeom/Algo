@@ -5,18 +5,15 @@ class Solution {
         int[] answer = {0, 0, 0, 0};
         int count = 0;
         HashMap<Integer, ArrayList<Integer>> nodes = new HashMap<>();
-        HashMap<Integer, Boolean> visited = new HashMap<>();
         
         for (int[] edge : edges) {
             if (nodes.get(edge[0]) == null) {
                 nodes.put(edge[0], new ArrayList<Integer>());
-                visited.put(edge[0], false);
                 nodes.get(edge[0]).add(0); // 0번째는 out 값.
                 nodes.get(edge[0]).add(0); // 1번째는 in 값.
             }
             if (nodes.get(edge[1]) == null) {
                 nodes.put(edge[1], new ArrayList<Integer>());
-                visited.put(edge[1], false);
                 nodes.get(edge[1]).add(0); // 0번째는 out 값.
                 nodes.get(edge[1]).add(0); // 1번째는 in 값.
             }
@@ -53,7 +50,6 @@ class Solution {
             count += k;
         }
         answer[1] += count;
-        
         
         return answer;
     }
