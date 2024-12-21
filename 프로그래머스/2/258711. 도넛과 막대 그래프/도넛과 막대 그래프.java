@@ -25,40 +25,25 @@ class Solution {
             nodes.get(edge[1]).set(1, nodes.get(edge[1]).get(1) + 1);
         }
         
+        int n = nodes.size() - 1;
+        int m = edges.length;
+        int k = n - m;
+        
         for (int node : nodes.keySet()) {
+            
             // 정점을 찾음.
             if (nodes.get(node).get(0) >= 2 && nodes.get(node).get(1) == 0) {
                 answer[0] = node;
-                count = nodes.get(node).get(0);
-                break;
-            }
-        }
-        // System.out.println(count);
-        
-        LinkedList<Integer> queue = new LinkedList<>();
-        queue.offer(answer[0]);
-        visited.put(answer[0], true);
-        
-        int n = nodes.size() - 1;
-        int m = edges.length - nodes.get(answer[0]).get(0);
-        int k = n - m;
-        
-        // 막대 찾기
-        while(!queue.isEmpty()) {
-            int curr = queue.poll();
-            
-            if (nodes.get(curr).get(0) == 0) {
-                answer[2]++;
-                count--;
-                k--;
+                count += nodes.get(node).get(0);
+                k += nodes.get(answer[0]).get(0);
                 continue;
             }
             
-            for (int i=2; i < nodes.get(curr).size(); i++) {
-                int next = nodes.get(curr).get(i);
-                if (visited.get(next)) continue;
-                visited.put(next, true);
-                queue.offer(next);
+            // 막대를 찾음.
+            if (nodes.get(node).get(0) == 0) {
+                answer[2]++;
+                count--;
+                k--;
             }
         }
         
