@@ -13,10 +13,10 @@ public class Main {
 			int K = Integer.parseInt(st.nextToken());
 			
 			int[] arr = new int[N];
+			int[] p = new int[N];
 			int[] dp = new int[N];
 			HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
 			LinkedList<Integer> queue = new LinkedList<>();
-			boolean[] isNotRoot = new boolean[N];
 			
 			st = new StringTokenizer(br.readLine());
 			for (int n=0; n<N; n++) {
@@ -29,11 +29,11 @@ public class Main {
 				int b = Integer.parseInt(st.nextToken()) - 1;
 				if (map.get(a) == null) map.put(a, new ArrayList<Integer>());
 				map.get(a).add(b);
-				isNotRoot[b] = true;
+				p[b]++;
 			}
 
 			for (int n=0; n<N; n++) {
-				if(!isNotRoot[n]) {
+				if(p[n] == 0) {
 					queue.offer(n);
 					dp[n] = arr[n];
 				}
@@ -48,9 +48,10 @@ public class Main {
 					int curr = queue.poll();
 					if (map.get(curr) == null) continue;
 					for(int k : map.get(curr)) {
-						if (dp[k] < arr[k]+dp[curr]) {
+						dp[k] = Math.max(dp[k], arr[k]+dp[curr]);
+						p[k]--;
+						if (p[k] == 0) {
 							queue.offer(k);
-							dp[k] = arr[k]+dp[curr];							
 						}
 					}
 				}
