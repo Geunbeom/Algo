@@ -8,16 +8,15 @@ class Node {
 }
 
 public class Main {
-
+	
+	static LinkedList<Node> q = new LinkedList<>();
+	
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
 		int N = Integer.parseInt(st.nextToken());
 		Node[] nodes = new Node[N+1];
-		
-		LinkedList<Node> q = new LinkedList<>();
-		Stack<Node> stack = new Stack<>();
 		
 		for (int i=0; i<N-1; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -33,30 +32,17 @@ public class Main {
 		}
 		
 		makeTree(null, nodes[1]);
-		nodes[1].link.forEach((v)->q.offer(v));
-		
-		while(!q.isEmpty()) {
-			int l = q.size();
-			for (int i=0; i<l; i++) {
-				Node curr = q.pop();
-				stack.add(curr);
-				curr.link.forEach((v)->{
-					if(v != curr.par) q.offer(v);
-				});
-			}
-		}
 		
 		int answer = 0;
-		while(!stack.isEmpty()) {
-			Node curr = stack.pop();
-			if (curr.isCheck) continue;
+		while(!q.isEmpty()) {
+			Node curr = q.pop();
+			if (curr.isCheck || curr.par == null) continue;
 			if (!curr.par.isCheck) {
 				curr.par.isCheck = true;
 				answer++;
 			}
 		}
 		System.out.println(answer);
-
 	}
 	
 	static public void makeTree(Node prev, Node curr) {
@@ -65,5 +51,6 @@ public class Main {
 			next.par = curr;
 			makeTree(curr, next);
 		}
+		q.offer(curr);
 	}
 }
