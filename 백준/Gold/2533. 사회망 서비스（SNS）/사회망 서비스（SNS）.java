@@ -17,16 +17,13 @@ public class Main {
 		
 		int N = Integer.parseInt(st.nextToken());
 		Node[] nodes = new Node[N+1];
+		Arrays.setAll(nodes, i -> new Node());
 		
 		for (int i=0; i<N-1; i++) {
 			st = new StringTokenizer(br.readLine());
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
 			
-			if (nodes[a] == null) {
-				nodes[a] = new Node();
-			}
-			if (nodes[b] == null) nodes[b] = new Node();
 			nodes[a].link.add(nodes[b]);
 			nodes[b].link.add(nodes[a]);
 		}
