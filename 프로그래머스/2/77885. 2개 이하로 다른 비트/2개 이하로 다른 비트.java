@@ -11,28 +11,20 @@ class Solution {
     }
     
     static long getBit(long bit) {
-        long k = 0;
-        int min = 64;
-        int max = 0;
+        if (bit%2 == 0) return bit+1;
         
+        int k = 0;
         for (int i=0; i<64; i++) {
-            if ((bit & ((long) 1<<i)) != 0) max = Math.max(max, i);
-            else min = Math.min(min, i);
-        }
-        
-        if (min > max) {
-            k = bit | ((long) 1<<min);
-            k = k ^ ((long) 1<<max);
-        }else {
-            if (bit%2 == 0) k = bit+1;
-            else {
-                k = bit | ((long) 1<<min);
-                k = k ^ ((long) 1<<(min-1));
+            if ((bit & ((long) 1<<i)) == 0) {
+                k = i;
+                break;
             }
         }
+
+        bit |= ((long) 1<<k);
+        bit ^= ((long) 1<<(k-1));
         
-        
-        return k;
+        return bit;
     }
     
 }
