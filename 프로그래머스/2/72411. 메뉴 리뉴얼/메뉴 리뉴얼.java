@@ -16,6 +16,9 @@ class Solution {
         }
         
         for (int i=0; i<orders.length; i++) {
+            char[] arr = orders[i].toCharArray();
+            Arrays.sort(arr);
+            orders[i] = new String(arr);
             for (int bit=0; bit<(1<<orders[i].length()); bit++) {
                 if (!isTrue[Integer.bitCount(bit)]) continue;
                 getString(orders[i], bit);
@@ -36,9 +39,6 @@ class Solution {
             if ((bit & (1<<i)) != 0)
             k += curr.charAt(i);
         }
-        char[] arr = k.toCharArray();
-        Arrays.sort(arr);
-        k = new String(arr);
         map.put(k, map.getOrDefault(k, 0)+1);
         count[k.length()] = Math.max(count[k.length()], map.get(k));
         return k;
