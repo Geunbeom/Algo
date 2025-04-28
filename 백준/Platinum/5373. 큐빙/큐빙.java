@@ -1,29 +1,6 @@
 import java.util.*;
 import java.io.*;
 
-class Cube {
-	HashMap<Character, Face> face = new HashMap<>();
-	
-	Cube() {
-		this.face.put('U', new Face('w'));
-		this.face.put('D', new Face('y'));
-		this.face.put('F', new Face('r'));
-		this.face.put('B', new Face('o'));
-		this.face.put('L', new Face('g'));
-		this.face.put('R', new Face('b'));
-		this.face.forEach((k, v) -> {
-			v.setLine(this);
-		});
-	}
-	
-	void reset() {
-		this.face.forEach((k, v) -> {
-			v.reset();
-		});
-	}
-	
-}
-
 class Face {
 	char org;
 	Code[] codes = new Code[9];
@@ -53,6 +30,7 @@ class Face {
 			codes[3].color = codes[7].color;
 			codes[7].color = codes[5].color;
 			codes[5].color = tmp;
+			
 			for (int i=0; i<3; i++) {
 				tmp = line[i].color;
 				for (int j=0; j<=6; j+=3) line[j+i].color = line[j+i+3].color;
@@ -107,72 +85,34 @@ class Face {
 		return output;
 	}
 	
-	void setLine(Cube cube) {
+	void setLine(HashMap<Character, Face> cube) {
 		Code[] out;
-		String[] li;
+		char[] li = {};
 		switch(this.org) {
-			case 'w' :
-				li = new String[] {"F1", "R1", "B3", "L1"};
-				for (int i=0; i<=9; i+=3) {
-					out = cube.face.get(li[i/3].charAt(0))
-						.getLine(li[i/3].charAt(1));
-					for (int j=0; j<3; j++) {
-						line[i+j] = out[j];
-					}
-				}
-				break;
-			case 'y' :
-				li = new String[] {"B1", "R3", "F3", "L3"};
-				for (int i=0; i<=9; i+=3) {
-					out = cube.face.get(li[i/3].charAt(0))
-						.getLine(li[i/3].charAt(1));
-					for (int j=0; j<3; j++) {
-						line[i+j] = out[j];
-					}
-				}
-				break;
-			case 'r' :
-				li = new String[] {"D1", "R4", "U3", "L2"};
-				for (int i=0; i<=9; i+=3) {
-					out = cube.face.get(li[i/3].charAt(0))
-						.getLine(li[i/3].charAt(1));
-					for (int j=0; j<3; j++) {
-						line[i+j] = out[j];
-					}
-				}
-				break;
-			case 'o' :
-				li = new String[] {"U1", "R2", "D3", "L4"};
-				for (int i=0; i<=9; i+=3) {
-					out = cube.face.get(li[i/3].charAt(0))
-						.getLine(li[i/3].charAt(1));
-					for (int j=0; j<3; j++) {
-						line[i+j] = out[j];
-					}
-				}
-				break;
-			case 'g' :
-				li = new String[] {"D4", "F4", "U4", "B4"};
-				for (int i=0; i<=9; i+=3) {
-					out = cube.face.get(li[i/3].charAt(0))
-						.getLine(li[i/3].charAt(1));
-					for (int j=0; j<3; j++) {
-						line[i+j] = out[j];
-					}
-				}
-				break;
-			case 'b' :
-				li = new String[] {"D2", "B2", "U2", "F2"};
-				for (int i=0; i<=9; i+=3) {
-					out = cube.face.get(li[i/3].charAt(0))
-						.getLine(li[i/3].charAt(1));
-					for (int j=0; j<3; j++) {
-						line[i+j] = out[j];
-					}
-				}
-				break;
+		case 'w' :
+			li = new char[] {'F', '1', 'R', '1', 'B', '3', 'L', '1'};
+			break;
+		case 'y' :
+			li = new char[] {'B', '1', 'R', '3', 'F', '3', 'L', '3'};
+			break;
+		case 'r' :
+			li = new char[] {'D', '1', 'R', '4', 'U', '3', 'L', '2'};
+			break;
+		case 'o' :
+			li = new char[] {'U', '1', 'R', '2', 'D', '3', 'L', '4'};
+			break;
+		case 'g' :
+			li = new char[] {'D', '4', 'F', '4', 'U', '4', 'B', '4'};
+			break;
+		case 'b' :
+			li = new char[] {'D', '2', 'B', '2', 'U', '2', 'F', '2'};
+			break;
 		}
 		
+		for (int i=0; i<=3; i++) {
+			out = cube.get(li[i*2]).getLine(li[i*2+1]);
+			for (int j=0; j<3; j++) line[i*3+j] = out[j];
+		}
 	}
 	
 	String out() {
@@ -183,7 +123,6 @@ class Face {
 		}
 		return out;
 	}
-	
 }
 
 class Code {
@@ -195,28 +134,37 @@ class Code {
 
 public class Main {
 	
-	static Cube cube = new Cube();
+	static HashMap<Character, Face> cube = new HashMap<>();
 	static BufferedReader br;
 	static StringBuilder sb = new StringBuilder();;
 	
 	public static void main(String[] args) throws Exception{
 		br = new BufferedReader(new InputStreamReader(System.in));
-
+		cube.put('U', new Face('w'));
+		cube.put('D', new Face('y'));
+		cube.put('F', new Face('r'));
+		cube.put('B', new Face('o'));
+		cube.put('L', new Face('g'));
+		cube.put('R', new Face('b'));
+		cube.forEach((k, v) -> {
+			v.setLine(cube);
+		});
+		
 		int tc = Integer.parseInt(br.readLine());
 		while (tc-- > 0) init();
 		System.out.print(sb);
 	}
 
 	private static void init() throws Exception{
-		cube.reset();
+		cube.forEach((k, v) -> v.reset());
 		int N = Integer.parseInt(br.readLine());
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		while (N-->0) {
 			String str = st.nextToken();
-			cube.face.get(str.charAt(0)).spin(str.charAt(1) == '+' ? true : false);
+			cube.get(str.charAt(0)).spin(str.charAt(1) == '+' ? true : false);
 		}
-		sb.append(cube.face.get('U').out());
+		sb.append(cube.get('U').out());
 		
 	}
 }
