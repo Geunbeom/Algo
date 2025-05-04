@@ -1,18 +1,13 @@
 class Solution {
 
-    static int answer, code, t;
+    static int answer, t;
     static int[] nbs;
     
     public int solution(int[] numbers, int target) {
-        code = 0;
         answer = 0;
         nbs = numbers;
         t = target;
-        
-        for (int i=0; i<numbers.length; i++) code |= (1<<i);
-        
         combination(0, 0);
-        
         return answer;
     }
     
