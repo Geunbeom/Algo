@@ -4,21 +4,18 @@ class Solution {
     public int solution(int n, int k) {
         int answer = 0;
         String bit = Integer.toString(n, k);
-        ArrayList<Long> arr = new ArrayList<>();
         
         String str = "";
         for (int i=0; i<bit.length(); i++) {
             if (bit.charAt(i) != '0') str += bit.charAt(i);
             else if(str.length() != 0){
-                arr.add(Long.parseLong(str));
+                if(isTrue(Long.parseLong(str))) answer++;
                 str = "";
             }
             
             if (i == bit.length()-1 && str.length() != 0)
-                arr.add(Long.parseLong(str));
+                if(isTrue(Long.parseLong(str))) answer++;
         }
-        
-        for (long i : arr) if(isTrue(i)) answer++;
         
         return answer;
     }
