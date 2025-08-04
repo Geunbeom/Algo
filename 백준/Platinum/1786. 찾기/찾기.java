@@ -73,29 +73,5 @@ public class Main {
         br = new BufferedReader(new InputStreamReader(System.in));
         org = br.readLine();
         code = br.readLine();
-        // st1 = new StringTokenizer(br.readLine());
-        // st2 = new StringTokenizer(br.readLine());
-
-        // org = new StringBuffer();
-        // code = new StringBuffer();
-        // boolean check1 = true;
-        // boolean check2 = true;
-        // while(check1 || check2) {
-        //     if (check1) {
-        //         try {
-        //             org.append(st1.nextToken());
-        //         }catch (Exception e) {
-        //             check1 = false;
-        //         }
-        //     }
-
-        //     if (check2) {
-        //         try {
-        //             code.append(st2.nextToken());
-        //         } catch (Exception e) {
-        //             check2 = false;
-        //         }
-        //     }
-        // }
     }
 }
