@@ -23,25 +23,25 @@ public class Main {
 
         for (int i=0; i<N; i++) {
             st = new StringTokenizer(br.readLine());
-            String code = st.nextToken();
-            if (!code.equals("empty") && !code.equals("all")) k = Integer.parseInt(st.nextToken())-1;
+            char code = st.nextToken().charAt(1);
+            if (code!='m' && code!='l') k = Integer.parseInt(st.nextToken())-1;
 
-            if (code.equals("add")) {
+            if (code=='d') {
                 bit |= (1<<k);
             }
-            else if (code.equals("check")) {
+            else if (code=='h') {
                 sb.append(((bit&(1<<k)) != 0 )?1:0).append("\n");
             }
-            else if (code.equals("remove")) {
+            else if (code=='e') {
                 bit &= ~(1<<k);
             }
-            else if (code.equals("toggle")) {
+            else if (code=='o') {
                 bit ^= (1<<k);
             }
-            else if (code.equals("all")) {
+            else if (code=='l') {
                 bit = (int) Math.pow(2, 20) - 1;
             }
-            else if (code.equals("empty")) {
+            else if (code=='m') {
                 bit = 0;
             }
 
